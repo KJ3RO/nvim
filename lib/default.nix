@@ -1,16 +1,6 @@
 {inputs}: let
   inherit (inputs.nixpkgs) legacyPackages;
 in rec {
-  mkCopilotChat = {system}: let
-    inherit (pkgs) vimUtils;
-    inherit (vimUtils) buildVimPlugin;
-    pkgs = legacyPackages.${system};
-  in
-    buildVimPlugin {
-      name = "CopilotChat";
-      src = inputs.copilotchat;
-    };
-
   mkVimPlugin = {system}: let
     inherit (pkgs) vimUtils;
     inherit (vimUtils) buildVimPlugin;
@@ -33,13 +23,16 @@ in rec {
 
   mkNeovimPlugins = {system}: let
     inherit (pkgs) vimPlugins;
-    CopilotChat-nvim = mkCopilotChat {inherit system;};
     pkgs = legacyPackages.${system};
     doyeon-nvim = mkVimPlugin {inherit system;};
   in [
     # telescope
     vimPlugins.plenary-nvim
     vimPlugins.telescope-nvim
+
+    # lualine
+    vimPlugins.nvim-web-devicons
+    vimPlugins.lualine-nvim
 
     # theme
     vimPlugins.tokyonight-nvim
