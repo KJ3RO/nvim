@@ -1,6 +1,6 @@
-local lualine = require 'lualine'
+local lualine = require('lualine')
 
-function init()
+local function init()
   lualine.setup({
     options = {
       theme = 'tokyonight',
